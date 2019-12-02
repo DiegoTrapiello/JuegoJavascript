@@ -1,4 +1,9 @@
 class Arco extends Arma {
+
+
+
+
+
     moverArriba(ancho,alto,callback){
         return new Animacion(imagenes.jugador_camina_con_arco_arriba,
             ancho, alto, 6, 9,callback);

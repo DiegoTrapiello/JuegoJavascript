@@ -22,7 +22,11 @@ estados.muriendo = 4;
 estados.muerto = 5;
 estados.disparando = 6;
 estados.impactado = 7;
+estados.atacando = 8;
 
 var orientaciones = {};
+orientaciones.arriba = 0;
+orientaciones.abajo = 1;
 orientaciones.derecha = 2;
 orientaciones.izquierda = 3;
+

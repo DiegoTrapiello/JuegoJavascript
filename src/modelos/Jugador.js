@@ -1,6 +1,8 @@
 class Jugador extends Modelo {
 
+
     constructor(x, y) {
+
         super(imagenes.jugador , x, y);
         this.estado = estados.moviendo;
 
@@ -8,6 +10,9 @@ class Jugador extends Modelo {
 
         this.vx = 0; // velocidadX
         this.vy = 0; // velocidadY
+
+        //Arma
+        this.arma = new Arma();
 
         // Disparo
         this.cadenciaDisparo = 24;
@@ -83,6 +88,7 @@ class Jugador extends Modelo {
                     }
                 }
                 break;
+            case estados.atacando:
         }
 
 
