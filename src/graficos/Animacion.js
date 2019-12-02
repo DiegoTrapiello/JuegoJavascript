@@ -5,8 +5,7 @@ class Animacion {
         this.callback = callback;
 
 
-        this.imagen = new Image();
-        this.imagen.src = imagenSrc;
+        this.imagen = cache[imagenSrc];
 
         this.modeloAncho = modeloAncho;
         this.modeloAlto = modeloAlto;
