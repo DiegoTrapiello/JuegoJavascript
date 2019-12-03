@@ -12,30 +12,31 @@ class Jugador extends Modelo {
         this.vy = 0; // velocidadY
 
         //Arma
-        this.arma = new Arma();
+        this.armaActual = new Arma(this.ancho,this.alto,this.finAnimacionDisparar.bind(this));
+        this.armas = new Array(4);
+        this.armas.push(this.armaActual);
 
         // Disparo
         this.cadenciaDisparo = 24;
         this.tiempoDisparo = 0;
 
         // Animaciones
-        this.aIdleDerecha = new Animacion(imagenes.jugador_idle_derecha,
-            this.ancho, this.alto, 6, 8);
-        this.aIdleIzquierda = new Animacion(imagenes.jugador_idle_izquierda,
-            this.ancho, this.alto, 6, 8);
-        this.aCorriendoDerecha =
-            new Animacion(imagenes.jugador_corriendo_derecha,
-                this.ancho, this.alto, 6, 8);
-        this.aCorriendoIzquierda = new Animacion(imagenes.jugador_corriendo_izquierda,
-            this.ancho, this.alto, 6, 8);
+        this.aIdleDerecha = this.armaActual.idleDerecha;
+        this.aIdleIzquierda = this.armaActual.idleIzquierda;
+        this.aIdleArriba = this.armaActual.idleArriba;
+        this.aIdleAbajo = this.armaActual.idleAbajo;
 
-        this.aDispararDerecha = new Animacion(imagenes.jugador_disparando_derecha,
-            this.ancho, this.alto,6,4,this.finAnimacionDisparar.bind(this) );
-// No pasar funciones del DIRECTAMNTE COMO callback
-// El objeto que ejecute la función no sabrá interpretar el "this."
+        //Moverse
+        this.aCorriendoDerecha = this.armaActual.moverDerecha;
+        this.aCorriendoIzquierda = this.armaActual.moverIzquierda;
+        this.aCorriendoArriba = this.armaActual.moverArriba;
+        this.aCorriendoAbajo = this.armaActual.moverAbajo;
 
-        this.aDispararIzquierda = new Animacion(imagenes.jugador_disparando_izquierda,
-            this.ancho,this.alto,6,4,this.finAnimacionDisparar.bind(this));
+        //Disparar / Atacar
+        this.aDispararDerecha = this.armaActual.atacarDerecha;
+        this.aDispararIzquierda = this.armaActual.atacarIzquierda;
+        this.aDispararArriba = this.armaActual.atacarArriba;
+        this.aDispararAbajo = this.armaActual.atacarAbajo;
 
 
 
@@ -60,6 +61,12 @@ class Jugador extends Modelo {
         if ( this.vx < 0 ){
             this.orientacion = orientaciones.izquierda;
         }
+        if (this.vy < 0 ){
+            this.orientacion = orientaciones.arriba;
+        }
+        if(this.vy > 0){
+            this.orientacion= orientaciones.abajo;
+        }
 
         switch (this.estado){
             case estados.disparando:
@@ -68,6 +75,12 @@ class Jugador extends Modelo {
                 }
                 if (this.orientacion == orientaciones.izquierda) {
                     this.animacion = this.aDispararIzquierda;
+                }
+                if (this.orientacion == orientaciones.arriba) {
+                    this.animacion = this.aDispararArriba;
+                }
+                if (this.orientacion == orientaciones.abajo) {
+                    this.animacion = this.aDispararAbajo;
                 }
                 break;
             case estados.moviendo:
@@ -79,16 +92,33 @@ class Jugador extends Modelo {
                         this.animacion = this.aCorriendoIzquierda;
                     }
                 }
-                if ( this.vx == 0){
+                if (this.vy != 0){
+                    if (this.orientacion == orientaciones.arriba) {
+                        this.animacion = this.aCorriendoArriba;
+                    }
+                    if (this.orientacion == orientaciones.abajo) {
+                        this.animacion = this.aCorriendoAbajo;
+                    }
+                }
+                if ( this.vx == 0) {
                     if (this.orientacion == orientaciones.derecha) {
                         this.animacion = this.aIdleDerecha;
                     }
                     if (this.orientacion == orientaciones.izquierda) {
                         this.animacion = this.aIdleIzquierda;
                     }
+
+                    if (this.vy == 0) {
+                        if (this.orientacion == orientaciones.arriba) {
+                            this.animacion = this.aIdleArriba;
+                        }
+                        if (this.orientacion == orientaciones.abajo) {
+                            this.animacion = this.aIdleAbajo;
+                        }
+
+                    }
                 }
                 break;
-            case estados.atacando:
         }
 
 
@@ -99,14 +129,6 @@ class Jugador extends Modelo {
             this.tiempoDisparo--;
         }
 
-
-    }
-
-    saltar(){
-        if ( !this.enElAire ) {
-            this.vy = -16;
-            this.enElAire = true;
-        }
 
     }
 

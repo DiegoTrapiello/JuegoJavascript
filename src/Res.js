@@ -41,7 +41,7 @@ var imagenes = {
     jugador_ataca_con_arco_abajo:"res/jugador_ataca_con_arco_abajo.png",
     jugador_ataca_con_arco_arriba:"res/jugador_ataca_con_arco_arriba.png",
     jugador_ataca_con_arco_derecha:"res/jugador_ataca_con_arco_derecha.png",
-    jugador_ataca_con_arco_izquierda:"jugador_ataca_con_arco_izquierda.png",
+    jugador_ataca_con_arco_izquierda:"res/jugador_ataca_con_arco_izquierda.png",
     jugador_ataca_con_daga_abajo:"res/jugador_ataca_con_daga_abajo.png",
     jugador_ataca_con_daga_arriba:"res/jugador_ataca_con_daga_arriba.png",
     jugador_ataca_con_daga_derecha:"res/jugador_ataca_con_daga_derecha.png",
@@ -66,7 +66,19 @@ var imagenes = {
     jugador_camina_sin_arma_arriba:"res/jugador_camina_sin_arma_arriba.png",
     jugador_camina_sin_arma_derecha:"res/jugador_camina_sin_arma_derecha.png",
     jugador_camina_sin_arma_izquierda:"res/jugador_camina_sin_arma_izquierda.png",
-    jugador_muere:"res/jugador_muere.png"
+    jugador_muere:"res/jugador_muere.png",
+    jugador_idle_con_arco_abajo:"res/jugador_idle_con_arco_abajo.png",
+    jugador_idle_con_arco_arriba:"res/jugador_idle_con_arco_arriba.png",
+    jugador_idle_con_arco_derecha:"res/jugador_idle_con_arco_derecha.png",
+    jugador_idle_con_arco_izquierda:"res/jugador_idle_con_arco_izquierda.png",
+    jugador_idle_con_daga_abajo:"res/jugador_idle_con_daga_abajo.png",
+    jugador_idle_con_daga_arriba:"res/jugador_idle_con_daga_arriba.png",
+    jugador_idle_con_daga_derecha:"res/jugador_idle_con_daga_derecha.png",
+    jugador_idle_con_daga_izquierda:"res/jugador_idle_con_daga_izquierda.png",
+    jugador_idle_sin_arma_abajo:"res/jugador_idle_sin_arma_abajo.png",
+    jugador_idle_sin_arma_arriba:"res/jugador_idle_sin_arma_arriba.png",
+    jugador_idle_sin_arma_derecha:"res/jugador_idle_sin_arma_derecha.png",
+    jugador_idle_sin_arma_izquierda:"res/jugador_idle_sin_arma_izquierda.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

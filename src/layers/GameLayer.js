@@ -7,7 +7,7 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
-        this.espacio = new Espacio(1);
+        this.espacio = new Espacio(0);
 
         this.botonSalto = new Boton(imagenes.boton_salto, 480 * 0.9, 320 * 0.55);
         this.botonDisparo = new Boton(imagenes.boton_disparo, 480 * 0.75, 320 * 0.83);
@@ -58,10 +58,6 @@ class GameLayer extends Layer {
         }
 
 
-        // Jugador se cae
-        if (this.jugador.y > 480) {
-            this.iniciar();
-        }
 
         // Eliminar disparos sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
@@ -305,19 +301,20 @@ class GameLayer extends Layer {
         } else if (controles.moverX < 0) {
             this.jugador.moverX(-1);
 
-        } else {
+        }
+        else {
             this.jugador.moverX(0);
         }
 
         // Eje Y
         if (controles.moverY > 0) {
-            this.jugador.saltar();
+            this.jugador.moverY(-1);
 
         } else if (controles.moverY < 0) {
-
+            this.jugador.moverY(1);
 
         } else {
-
+            this.jugador.moverY(0);
         }
 
     }
