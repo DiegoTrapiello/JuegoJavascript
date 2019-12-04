@@ -2,6 +2,9 @@ class Arma {
 
     constructor(ancho, alto, callback,) {
 
+        this.tiempoDisparo = 0;
+        this.cadenciaDisparo = 24;
+
         this.moverArriba = new Animacion(imagenes.jugador_camina_sin_arma_arriba,
             ancho, alto, 3, 9, null);
 
@@ -39,12 +42,23 @@ class Arma {
         this.atacarIzquierda = new Animacion(imagenes.jugador_ataca_sin_arma_izquierda,
             ancho, alto, 3, 6, callback);
 
-        this.morir =  new Animacion(imagenes.jugador_muere,
+        this.morir = new Animacion(imagenes.jugador_muere,
             ancho, alto, 3, 6, null);
 
 
-    }
+        this.proyectilIzquierda= imagenes.invisible;
 
+        this.proyectilDerecha=imagenes.invisible;
+
+        this.proyectilArriba=imagenes.invisible;
+
+        this.proyectilAbajo=imagenes.invisible;
+
+
+
+        this.multiplicadorDaño = 1;
+
+    }
 
 
 

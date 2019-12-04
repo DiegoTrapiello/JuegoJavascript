@@ -16,6 +16,7 @@ class Enemigo extends Modelo {
         this.vx = this.vxInteligencia;
         this.vy = 0;
 
+        this.vida = 50;
     }
 
     finAnimacionMorir(){

@@ -17,16 +17,16 @@ class Daga extends Arma {
             ancho, alto, 3, 9, null);
 
         this.atacarArriba = new Animacion(imagenes.jugador_ataca_con_daga_arriba,
-            ancho, alto, 3, 6, callback);
+            ancho, alto, 1, 6, callback);
 
         this.atacarAbajo = new Animacion(imagenes.jugador_ataca_con_daga_abajo,
-            ancho, alto, 3, 6, callback);
+            ancho, alto, 1, 6, callback);
 
         this.atacarDerecha = new Animacion(imagenes.jugador_ataca_con_daga_derecha,
-            ancho, alto, 3, 6, callback);
+            ancho, alto, 1, 6, callback);
 
         this.atacarIzquierda = new Animacion(imagenes.jugador_ataca_con_daga_izquierda,
-            ancho, alto, 3, 6, callback);
+            ancho, alto, 1, 6, callback);
 
         this.idleArriba = new Animacion(imagenes.jugador_idle_con_daga_arriba,
             ancho, alto, 3, 1, null);
@@ -40,6 +40,8 @@ class Daga extends Arma {
         this.idleDerecha = new Animacion(imagenes.jugador_idle_con_daga_derecha,
             ancho, alto, 3, 1, null);
 
+
+        this.multiplicadorDaño = 2;
 
 }
 

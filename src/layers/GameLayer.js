@@ -63,7 +63,7 @@ class GameLayer extends Layer {
         // Eliminar disparos sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
             if (this.disparosJugador[i] != null &&
-                this.disparosJugador[i].vx == 0) {
+                this.disparosJugador[i].vx == 0 && this.disparosJugador[i].vy == 0) {
 
                 this.espacio
                     .eliminarCuerpoDinamico(this.disparosJugador[i]);

@@ -17,8 +17,8 @@ class Jugador extends Modelo {
         this.armas.push(this.armaActual);
 
         // Disparo
-        this.cadenciaDisparo = 24;
-        this.tiempoDisparo = 0;
+        this.armaActual.cadenciaDisparo = 24;
+        this.armaActual.tiempoDisparo = 0;
 
         this.cargarAnimaciones();
 
@@ -126,8 +126,8 @@ class Jugador extends Modelo {
 
 
         // Tiempo Disparo
-        if (this.tiempoDisparo > 0) {
-            this.tiempoDisparo--;
+        if (this.armaActual.tiempoDisparo > 0) {
+            this.armaActual.tiempoDisparo--;
         }
 
 
@@ -149,16 +149,35 @@ class Jugador extends Modelo {
     disparar() {
 
 
-        if (this.tiempoDisparo == 0) {
+        if (this.armaActual.tiempoDisparo == 0) {
             this.vx = 0;
             this.vy = 0;
+
             // reiniciar Cadencia
             this.estado = estados.disparando;
-            this.tiempoDisparo = this.cadenciaDisparo;
-            var disparo = new DisparoJugador(this.x, this.y);
+            this.armaActual.tiempoDisparo = this.armaActual.cadenciaDisparo;
+            var disparo;
             if (this.orientacion == orientaciones.izquierda) {
-                disparo.vx = disparo.vx * -1; //invertir
+                disparo= new DisparoJugador(this.armaActual.proyectilIzquierda,this.x,this.y);
+                disparo.vy = 0;
+                disparo.vx = disparo.vx * -1;
+
             }
+            if (this.orientacion == orientaciones.arriba) {
+                disparo= new DisparoJugador(this.armaActual.proyectilArriba,this.x,this.y);
+                disparo.vx =0;
+                disparo.vy = disparo.vy * -1;
+            }
+            if (this.orientacion == orientaciones.abajo) {
+                disparo= new DisparoJugador(this.armaActual.proyectilAbajo,this.x,this.y);
+                disparo.vx=0;
+
+            }
+            if (this.orientacion == orientaciones.derecha) {
+                disparo= new DisparoJugador(this.armaActual.proyectilDerecha,this.x,this.y);
+                disparo.vy=0;
+            }
+            disparo.daño=disparo.daño * this.armaActual.multiplicadorDaño;
             return disparo;
 
         } else {

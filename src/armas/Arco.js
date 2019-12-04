@@ -22,19 +22,19 @@ class Arco extends Arma {
 
         this
             .atacarArriba = new Animacion(imagenes.jugador_ataca_con_arco_arriba,
-            ancho, alto, 3, 13, callback);
+            ancho, alto, 0.5, 13, callback);
 
         this
             .atacarAbajo = new Animacion(imagenes.jugador_ataca_con_arco_abajo,
-            ancho, alto, 3, 13, callback);
+            ancho, alto, 0.5, 13, callback);
 
         this
             .atacarDerecha = new Animacion(imagenes.jugador_ataca_con_arco_derecha,
-            ancho, alto, 3, 13, callback);
+            ancho, alto, 0.5, 13, callback);
 
         this
             .atacarIzquierda = new Animacion(imagenes.jugador_ataca_con_arco_izquierda,
-            ancho, alto, 3, 13, callback);
+            ancho, alto, 0.5, 13, callback);
 
 
 
@@ -49,6 +49,16 @@ class Arco extends Arma {
 
         this.idleDerecha = new Animacion(imagenes.jugador_idle_con_arco_derecha,
             ancho, alto, 3, 1, null);
+
+
+        this.proyectilIzquierda=imagenes.flecha_izquierda;
+        this.proyectilDerecha=imagenes.flecha_derecha;
+        this.proyectilArriba=imagenes.flecha_arriba;
+        this.proyectilAbajo=imagenes.flecha_abajo;
+
+
+
+        this.multiplicadorDaño = 2;
 
     }
 

@@ -81,7 +81,12 @@ var imagenes = {
     jugador_idle_sin_arma_izquierda:"res/jugador_idle_sin_arma_izquierda.png",
     modelo_daga:"res/modelo_daga.png",
     modelo_arco:"res/modelo_arco.png",
-    modelo_lanza:"res/modelo_lanza.png"
+    modelo_lanza:"res/modelo_lanza.png",
+    flecha_derecha:"res/flecha_derecha.png",
+    flecha_abajo:"res/flecha_abajo.png",
+    flecha_arriba:"res/flecha_arriba.png",
+    flecha_izquierda:"res/flecha_izquierda.png",
+    invisible:"res/invisible.png"
 };
 
 var rutasImagenes = Object.values(imagenes);
@@ -95,6 +100,9 @@ function cargarImagenes(indice){
             indice++;
             cargarImagenes(indice);
         } else {
+
+            //PROYECTIL INVISIBLE PARA ATAQUES A MELÉ
+            cache[imagenes.invisible]= new Image(50,50);
             iniciarJuego();
         }
     }
