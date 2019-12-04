@@ -19,8 +19,6 @@ class Espacio {
 
             // reiniciar choques
             this.dinamicos[i].choqueAbajo = false;
-            this.dinamicos[i].fueraPorDerecha = true;
-            this.dinamicos[i].fueraPorIzquierda = true;
 
 
             //derecha
@@ -70,14 +68,6 @@ class Espacio {
                         // Tenemos que actualizar el movimiento posible a uno menor
                         this.dinamicos[i].choqueAbajo = true;
                         movimientoPosible = arribaEstatico - abajoDinamico;
-
-                        if (derechaDinamico <= derechaEstatico) {
-                            this.dinamicos[i].fueraPorDerecha = false;
-                        }
-
-                        if (izquierdaDinamico >= izquierdaEstatico) {
-                            this.dinamicos[i].fueraPorIzquierda = false;
-                        }
 
                     }
                 }

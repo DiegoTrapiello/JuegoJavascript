@@ -45,17 +45,14 @@ class Jugador extends Modelo {
         this.aDispararIzquierda = this.armaActual.atacarIzquierda;
         this.aDispararArriba = this.armaActual.atacarArriba;
         this.aDispararAbajo = this.armaActual.atacarAbajo;
+
+        this.aMorir = new Animacion(imagenes.jugador_muere,
+            this.ancho,this.alto,6,6, this.finAnimacionMorir.bind(this));
     }
 
     actualizar() {
         this.animacion.actualizar();
 
-        // ¿Esta en el aire?
-        if (this.choqueAbajo == true) {
-            this.enElAire = false;
-        } else {
-            this.enElAire = true;
-        }
 
         // Establecer orientación
         if (this.vx > 0) {
@@ -72,6 +69,9 @@ class Jugador extends Modelo {
         }
 
         switch (this.estado) {
+            case estados.muriendo:
+                this.animacion=this.aMorir;
+                break;
             case estados.disparando:
                 if (this.orientacion == orientaciones.derecha) {
                     this.animacion = this.aDispararDerecha;
@@ -135,14 +135,21 @@ class Jugador extends Modelo {
 
 
     moverX(direccion) {
-        if (this.estado != estados.disparando) {
+        if (this.estado != estados.disparando   && this.estado != estados.muriendo) {
             this.vx = direccion * 3;
+        }
+        else{
+            this.vx=0;
+            this.vy = 0;
         }
     }
 
     moverY(direccion) {
-        if (this.estado != estados.disparando) {
+        if (this.estado != estados.disparando  && this.estado!= estados.muriendo) {
             this.vy = direccion * 3;
+        }else{
+            this.vx=0;
+            this.vy = 0;
         }
     }
 
@@ -194,6 +201,10 @@ class Jugador extends Modelo {
     dibujar(scrollX) {
         scrollX = scrollX || 0;
         this.animacion.dibujar(this.x - scrollX, this.y);
+    }
+
+    finAnimacionMorir(){
+        this.estado = estados.muerto;
     }
 
 

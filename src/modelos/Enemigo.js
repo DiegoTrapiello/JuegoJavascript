@@ -12,9 +12,13 @@ class Enemigo extends Modelo {
         // Ref a la animación actual
         this.animacion = this.aMover;
 
-        this.vxInteligencia = -1;
+        this.vxInteligencia = 1;
+        this.vyInteligencia= 1;
         this.vx = this.vxInteligencia;
-        this.vy = 0;
+        this.vy = this.vyInteligencia;
+
+        this.posJugadorX=0
+        this.posJugadorY=0;
 
         this.vida = 50;
     }
@@ -34,27 +38,30 @@ class Enemigo extends Modelo {
                 this.animacion = this.aMorir;
                 break;
         }
-
-
         if ( this.estado == estados.muriendo) {
             this.vx = 0;
+            this.vy =0;
         } else {
+
+            if(this.posJugadorX > this.x){
+                this.vx = 1;
+
+            }
+            if(this.posJugadorX < this.x){
+                this.vx = -1;
+
+            }
+            if(this.posJugadorY > this.y){
+                this.vy = 1;
+
+            }
+            if(this.posJugadorY < this.y){
+                this.vy =-1;
+
+            }
+
             if ( this.vx == 0){
                 this.vxInteligencia = this.vxInteligencia * -1;
-                this.vx = this.vxInteligencia;
-            }
-            if (this.fueraPorDerecha ){
-                // mover hacia la izquierda vx tiene que ser negativa
-                if ( this.vxInteligencia > 0){
-                    this.vxInteligencia = this.vxInteligencia * -1;
-                }
-                this.vx = this.vxInteligencia;
-            }
-            if (this.fueraPorIzquierda ){
-                // mover hacia la derecha vx tiene que ser positiva
-                if ( this.vxInteligencia < 0){
-                    this.vxInteligencia = this.vxInteligencia * -1;
-                }
                 this.vx = this.vxInteligencia;
             }
 

@@ -103,6 +103,8 @@ class GameLayer extends Layer {
 
         this.jugador.actualizar();
         for (var i = 0; i < this.enemigos.length; i++) {
+            this.enemigos[i].posJugadorX = this.jugador.x;
+            this.enemigos[i].posJugadorY = this.jugador.y;
             this.enemigos[i].actualizar();
         }
 
@@ -113,10 +115,14 @@ class GameLayer extends Layer {
             this.disparosJugador[i].actualizar();
         }
 
+
+        if (this.jugador.estado == estados.muerto) {
+            this.iniciar();
+        }
         // colisiones
         for (var i = 0; i < this.enemigos.length; i++) {
             if (this.jugador.colisiona(this.enemigos[i])) {
-                this.iniciar();
+                this.jugador.estado = estados.muriendo;
             }
         }
 
