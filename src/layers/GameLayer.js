@@ -19,10 +19,12 @@ class GameLayer extends Layer {
 
         this.bloques = [];
         this.bloquesDestruibles = [];
-        this.bloquesRompenAlPisar= [];
+        this.bloquesRompenAlPisar = [];
         this.bloquesSalto = [];
         this.puntosDeGuardado = [];
         this.recolectables = [];
+        this.modelosArmas = [];
+
         this.fondo = new Fondo(imagenes.fondo_2, 480 * 0.5, 320 * 0.5);
 
         this.enemigos = [];
@@ -58,7 +60,6 @@ class GameLayer extends Layer {
         }
 
 
-
         // Eliminar disparos sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
             if (this.disparosJugador[i] != null &&
@@ -86,7 +87,6 @@ class GameLayer extends Layer {
         }
 
 
-        console.log("disparosJugador: " + this.disparosJugador.length);
         // Eliminar disparos fuera de pantalla
         for (var i = 0; i < this.disparosJugador.length; i++) {
             if (this.disparosJugador[i] != null &&
@@ -138,6 +138,17 @@ class GameLayer extends Layer {
             }
         }
 
+        for (var i = 0; i < this.modelosArmas.length; i++) {
+            if (this.jugador.colisiona(this.modelosArmas[i])) {
+                this.jugador.armas.push(this.modelosArmas[i].armaAsociada);
+                this.jugador.armaActual = this.modelosArmas[i].armaAsociada;
+                this.jugador.cargarAnimaciones();
+                this.espacio.eliminarCuerpoDinamico(this.modelosArmas[i]);
+                this.modelosArmas.splice(i, 1);
+                i = i - 1;
+            }
+        }
+
         for (var i = 0; i < this.bloquesSalto.length; i++) {
             if (this.jugador.colisiona(this.bloquesSalto[i])) {
                 if (this.jugador.y + this.jugador.alto / 2 <= this.bloquesSalto[i].y - this.bloquesSalto[i].alto / 2) {
@@ -153,19 +164,17 @@ class GameLayer extends Layer {
                     this.bloquesRompenAlPisar[i].pisado = true;
                 }
             }
-            if (this.bloquesRompenAlPisar[i].pisado){
+            if (this.bloquesRompenAlPisar[i].pisado) {
                 this.bloquesRompenAlPisar[i].romperse--;
             }
 
-            if (this.bloquesRompenAlPisar[i].romperse<=0){
+            if (this.bloquesRompenAlPisar[i].romperse <= 0) {
                 this.espacio.eliminarCuerpoEstatico(this.bloquesRompenAlPisar[i]);
-                this.bloquesRompenAlPisar.splice(i,1);
-                i=i-1;
+                this.bloquesRompenAlPisar.splice(i, 1);
+                i = i - 1;
 
             }
         }
-
-
 
 
         // colisiones , disparoJugador - Enemigo
@@ -254,6 +263,10 @@ class GameLayer extends Layer {
             this.bloquesRompenAlPisar[i].dibujar(this.scrollX);
         }
 
+        for (var i = 0; i < this.modelosArmas.length; i++) {
+            this.modelosArmas[i].dibujar(this.scrollX);
+        }
+
         this.copa.dibujar(this.scrollX);
         for (var i = 0; i < this.disparosJugador.length; i++) {
             this.disparosJugador[i].dibujar(this.scrollX);
@@ -301,8 +314,7 @@ class GameLayer extends Layer {
         } else if (controles.moverX < 0) {
             this.jugador.moverX(-1);
 
-        }
-        else {
+        } else {
             this.jugador.moverX(0);
         }
 
@@ -317,6 +329,15 @@ class GameLayer extends Layer {
             this.jugador.moverY(0);
         }
 
+        if (controles.cambiarArma > -1) {
+            if (this.jugador.estado != estados.disparando) {
+                if (this.jugador.armas[controles.cambiarArma] != null) {
+                    console.log(this.jugador.armas[controles.cambiarArma] + "dentro del if");
+                    this.jugador.armaActual = this.jugador.armas[controles.cambiarArma];
+                    this.jugador.cargarAnimaciones();
+                }
+            }
+        }
     }
 
 
@@ -410,6 +431,28 @@ class GameLayer extends Layer {
                 this.bloquesRompenAlPisar.push(bloque);
                 //this.bloques.push(bloque);
                 this.espacio.agregarCuerpoEstatico(bloque);
+                break;
+            case "R":
+                var armaArco = new ModeloArco(imagenes.modelo_arco, x, y, this.jugador.ancho, this.jugador.alto, this.jugador.finAnimacionDisparar.bind(this.jugador));
+                armaArco.y = armaArco.y - armaArco.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.modelosArmas.push(armaArco);
+                this.espacio.agregarCuerpoDinamico(armaArco);
+                break;
+            case "D":
+                var armaDaga = new ModeloDaga(imagenes.modelo_daga, x, y, this.jugador.ancho, this.jugador.alto, this.jugador.finAnimacionDisparar.bind(this.jugador));
+                armaDaga.y = armaDaga.y - armaDaga.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.modelosArmas.push(armaDaga);
+                this.espacio.agregarCuerpoDinamico(armaDaga);
+                break;
+            case "L":
+                //tengo que multiplicar por 3 porque el sprite tiene un escalado diferente al de los demas
+                var armaLanza = new ModeloLanza(imagenes.modelo_lanza, x, y, this.jugador.ancho * 3, this.jugador.alto * 3, this.jugador.finAnimacionDisparar.bind(this.jugador));
+                armaLanza.y = armaLanza.y - armaLanza.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.modelosArmas.push(armaLanza);
+                this.espacio.agregarCuerpoDinamico(armaLanza);
                 break;
         }
     }

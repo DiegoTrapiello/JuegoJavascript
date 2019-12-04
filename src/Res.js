@@ -78,7 +78,10 @@ var imagenes = {
     jugador_idle_sin_arma_abajo:"res/jugador_idle_sin_arma_abajo.png",
     jugador_idle_sin_arma_arriba:"res/jugador_idle_sin_arma_arriba.png",
     jugador_idle_sin_arma_derecha:"res/jugador_idle_sin_arma_derecha.png",
-    jugador_idle_sin_arma_izquierda:"res/jugador_idle_sin_arma_izquierda.png"
+    jugador_idle_sin_arma_izquierda:"res/jugador_idle_sin_arma_izquierda.png",
+    modelo_daga:"res/modelo_daga.png",
+    modelo_arco:"res/modelo_arco.png",
+    modelo_lanza:"res/modelo_lanza.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

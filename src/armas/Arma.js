@@ -40,7 +40,7 @@ class Arma {
             ancho, alto, 3, 6, callback);
 
         this.morir =  new Animacion(imagenes.jugador_muere,
-            ancho, alto, 3, 6, callback);
+            ancho, alto, 3, 6, null);
 
 
     }

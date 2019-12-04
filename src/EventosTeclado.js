@@ -27,6 +27,18 @@ function onKeyDown( event) {
             case 37:
                 controles.moverX = -1;
                 break;
+            case 49:
+                controles.cambiarArma=0;
+                break;
+            case 50:
+                controles.cambiarArma=1;
+                break;
+            case 51:
+                controles.cambiarArma=2;
+                break;
+            case 52:
+                controles.cambiarArma=3;
+                break;
         }
 
     }
@@ -60,6 +72,26 @@ function onKeyUp( event) {
         case 37:
             if ( controles.moverX == -1 ){
                 controles.moverX = 0;
+            }
+            break;
+        case 49:
+            if ( controles.cambiarArma == 0 ){
+                controles.cambiarArma = -1;
+            }
+            break;
+        case 50:
+            if ( controles.cambiarArma == 1 ){
+                controles.cambiarArma = -1;
+            }
+            break;
+        case 51:
+            if ( controles.cambiarArma == 2 ){
+                controles.cambiarArma = -1;
+            }
+            break;
+        case 52:
+            if ( controles.cambiarArma == 3 ){
+                controles.cambiarArma = -1;
             }
             break;
     }
