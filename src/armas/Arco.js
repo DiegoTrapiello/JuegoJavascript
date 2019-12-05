@@ -58,7 +58,7 @@ class Arco extends Arma {
 
 
 
-        this.multiplicadorDaño = 2;
+        this.multiplicador = 2;
 
     }
 

@@ -4,6 +4,10 @@ class Jugador extends Modelo {
     constructor(x, y) {
 
         super(imagenes.jugador, x, y);
+
+        this.vidas = 3;
+        this.tiempoInvulnerable = 0;
+
         this.estado = estados.moviendo;
 
         this.orientacion = orientaciones.derecha;
@@ -51,6 +55,11 @@ class Jugador extends Modelo {
     }
 
     actualizar() {
+
+        if (this.tiempoInvulnerable > 0 ){
+            this.tiempoInvulnerable --;
+        }
+
         this.animacion.actualizar();
 
 
@@ -184,7 +193,9 @@ class Jugador extends Modelo {
                 disparo= new DisparoJugador(this.armaActual.proyectilDerecha,this.x,this.y);
                 disparo.vy=0;
             }
-            disparo.daño=disparo.daño * this.armaActual.multiplicadorDaño;
+
+            //CALCULO DEL DAÑO
+            disparo.dmg=disparo.dmg * this.armaActual.multiplicador;
             return disparo;
 
         } else {
@@ -200,11 +211,26 @@ class Jugador extends Modelo {
 
     dibujar(scrollX) {
         scrollX = scrollX || 0;
-        this.animacion.dibujar(this.x - scrollX, this.y);
+        if ( this.tiempoInvulnerable > 0) {
+            contexto.globalAlpha = 0.5;
+            this.animacion.dibujar(this.x - scrollX, this.y);
+            contexto.globalAlpha = 1;
+        } else {
+            this.animacion.dibujar(this.x - scrollX, this.y);
+        }
     }
 
     finAnimacionMorir(){
         this.estado = estados.muerto;
+    }
+
+    golpeado (){
+        if (this.tiempoInvulnerable <= 0) {
+            if (this.vidas > 0) {
+                this.vidas--;
+                this.tiempoInvulnerable = 100;
+            }
+        }
     }
 
 

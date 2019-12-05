@@ -20,7 +20,7 @@ class Lanza extends Arma{
 
 
 
-        this.multiplicadorDaño = 5;
+        this.multiplicador = 5;
     }
 
 

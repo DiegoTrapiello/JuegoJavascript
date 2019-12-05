@@ -4,7 +4,7 @@ class DisparoJugador extends Modelo {
         super(imagen, x, y);
         this.vx = 9;
         this.vy =9;
-        this.daño = 10;
+        this.dmg = 10;
     }
 
     actualizar (){

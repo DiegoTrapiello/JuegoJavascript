@@ -86,7 +86,8 @@ var imagenes = {
     flecha_abajo:"res/flecha_abajo.png",
     flecha_arriba:"res/flecha_arriba.png",
     flecha_izquierda:"res/flecha_izquierda.png",
-    invisible:"res/invisible.png"
+    invisible:"res/invisible.png",
+    hierba:"res/hierba.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

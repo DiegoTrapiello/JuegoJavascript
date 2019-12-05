@@ -41,7 +41,7 @@ class Daga extends Arma {
             ancho, alto, 3, 1, null);
 
 
-        this.multiplicadorDaño = 2;
+        this.multiplicador = 2;
 
 }
 

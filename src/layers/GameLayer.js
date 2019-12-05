@@ -7,11 +7,8 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
+        reproducirMusica();
         this.espacio = new Espacio(0);
-
-        this.botonSalto = new Boton(imagenes.boton_salto, 480 * 0.9, 320 * 0.55);
-        this.botonDisparo = new Boton(imagenes.boton_disparo, 480 * 0.75, 320 * 0.83);
-        this.pad = new Pad(480 * 0.14, 320 * 0.8);
 
 
         this.scrollX = 0;
@@ -25,7 +22,7 @@ class GameLayer extends Layer {
         this.recolectables = [];
         this.modelosArmas = [];
 
-        this.fondo = new Fondo(imagenes.fondo_2, 480 * 0.5, 320 * 0.5);
+        this.fondo = new Fondo(imagenes.hierba, 480 * 0.5, 320 * 0.5);
 
         this.enemigos = [];
 
@@ -103,8 +100,10 @@ class GameLayer extends Layer {
 
         this.jugador.actualizar();
         for (var i = 0; i < this.enemigos.length; i++) {
-            this.enemigos[i].posJugadorX = this.jugador.x;
-            this.enemigos[i].posJugadorY = this.jugador.y;
+            if (this.enemigos[i].estaEnPantalla()) {
+                this.enemigos[i].posJugadorX = this.jugador.x;
+                this.enemigos[i].posJugadorY = this.jugador.y;
+            }
             this.enemigos[i].actualizar();
         }
 
@@ -122,7 +121,14 @@ class GameLayer extends Layer {
         // colisiones
         for (var i = 0; i < this.enemigos.length; i++) {
             if (this.jugador.colisiona(this.enemigos[i])) {
-                this.jugador.estado = estados.muriendo;
+                this.jugador.golpeado();
+                if (this.jugador.vidas <= 0) {
+                    this.jugador.estado = estados.muriendo;
+                    this.enemigos[i].vx = 0;
+                    this.enemigos[i].vy = 0;
+                }
+
+
             }
         }
 
@@ -190,14 +196,15 @@ class GameLayer extends Layer {
                     this.enemigos[j] != null &&
                     this.enemigos[j].estado != estados.muriendo &&
                     this.disparosJugador[i].colisiona(this.enemigos[j])) {
-
+                    this.enemigos[j].vida = this.enemigos[j].vida - this.disparosJugador[i].dmg;
+                    this.enemigos[j].impactado();
+                    if (this.enemigos[j].estado==estados.muriendo) {
+                        this.puntos.valor++;
+                    }
                     this.espacio
                         .eliminarCuerpoDinamico(this.disparosJugador[i]);
                     this.disparosJugador.splice(i, 1);
                     i = i - 1;
-                    this.enemigos[j].impactado();
-
-                    this.puntos.valor++;
                 }
             }
         }
@@ -293,7 +300,6 @@ class GameLayer extends Layer {
         this.textoRecolectables.dibujar();
         if (!this.pausa && entrada == entradas.pulsaciones) {
             this.botonDisparo.dibujar();
-            this.botonSalto.dibujar();
             this.pad.dibujar();
         }
 
@@ -385,6 +391,13 @@ class GameLayer extends Layer {
                 this.enemigos.push(enemigo);
                 this.espacio.agregarCuerpoDinamico(enemigo);
                 break;
+
+            case "O": var enemigo = new EnemigoClon(x, y);
+                enemigo.y = enemigo.y - enemigo.alto / 2;
+                // modificación para empezar a contar desde el suelo
+                this.enemigos.push(enemigo);
+                this.espacio.agregarCuerpoDinamico(enemigo);
+                break;
             case "1":
                 this.jugador = new Jugador(x, y);
                 if (this.puntoDeGuardadoX) {
@@ -460,54 +473,6 @@ class GameLayer extends Layer {
                 this.modelosArmas.push(armaLanza);
                 this.espacio.agregarCuerpoDinamico(armaLanza);
                 break;
-        }
-    }
-
-    calcularPulsaciones(pulsaciones) {
-        // Suponemos botones no estan pulsados
-        this.botonDisparo.pulsado = false;
-        this.botonSalto.pulsado = false;
-
-        // suponemos que el pad está sin tocar
-        controles.moverX = 0;
-
-
-        for (var i = 0; i < pulsaciones.length; i++) {
-            if (this.pad.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                var orientacionX = this.pad.obtenerOrientacionX(pulsaciones[i].x);
-                if (orientacionX > 20) { // de 0 a 20 no contabilizamos
-                    controles.moverX = 1;
-                }
-                if (orientacionX < -20) { // de -20 a 0 no contabilizamos
-                    controles.moverX = -1;
-                }
-            }
-
-
-            if (this.botonDisparo.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                this.botonDisparo.pulsado = true;
-                if (pulsaciones[i].tipo == tipoPulsacion.inicio) {
-                    controles.disparo = true;
-                }
-            }
-
-            if (this.botonSalto.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                this.botonSalto.pulsado = true;
-                if (pulsaciones[i].tipo == tipoPulsacion.inicio) {
-                    controles.moverY = 1;
-                }
-            }
-
-        }
-
-        // No pulsado - Boton Disparo
-        if (!this.botonDisparo.pulsado) {
-            controles.disparo = false;
-        }
-
-        // No pulsado - Boton Salto
-        if (!this.botonSalto.pulsado) {
-            controles.moverY = 0;
         }
     }
 
