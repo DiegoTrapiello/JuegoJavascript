@@ -4,6 +4,11 @@ class Arco extends Arma {
 
         super(ancho, alto, callback);
 
+        this.tiempoDisparo = 0;
+        this.cadenciaDisparo = 24;
+        this.tiempoVidaProyectil = 1000;
+        this.sonido = efectos.impacto_arco;
+
         this
             .moverArriba = new Animacion(imagenes.jugador_camina_con_arco_arriba,
             ancho, alto, 3, 9, null);

@@ -103,7 +103,7 @@ function cargarImagenes(indice){
         } else {
 
             //PROYECTIL INVISIBLE PARA ATAQUES A MELÉ
-            cache[imagenes.invisible]= new Image(50,50);
+            cache[imagenes.invisible]= new Image(25,25);
             iniciarJuego();
         }
     }

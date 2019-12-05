@@ -4,6 +4,9 @@ class Daga extends Arma {
 
         super(ancho,alto,callback);
 
+        this.tiempoVidaProyectil = 3;
+        this.sonido = efectos.impacto_daga;
+
         this.moverArriba = new Animacion(imagenes.jugador_camina_con_daga_arriba,
             ancho, alto, 3, 9, null);
 

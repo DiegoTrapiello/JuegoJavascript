@@ -29,6 +29,10 @@ class Jugador extends Modelo {
 
         this.animacion = this.aIdleDerecha;
 
+
+        this.efectoMorir = efectos.jugador_muere;
+        this.efectoMorirReproducido = false;
+
     }
 
     cargarAnimaciones() {
@@ -174,23 +178,23 @@ class Jugador extends Modelo {
             this.armaActual.tiempoDisparo = this.armaActual.cadenciaDisparo;
             var disparo;
             if (this.orientacion == orientaciones.izquierda) {
-                disparo= new DisparoJugador(this.armaActual.proyectilIzquierda,this.x,this.y);
+                disparo= new DisparoJugador(this.armaActual.proyectilIzquierda,this.x,this.y ,this.armaActual.tiempoVidaProyectil);
                 disparo.vy = 0;
                 disparo.vx = disparo.vx * -1;
 
             }
             if (this.orientacion == orientaciones.arriba) {
-                disparo= new DisparoJugador(this.armaActual.proyectilArriba,this.x,this.y);
+                disparo= new DisparoJugador(this.armaActual.proyectilArriba,this.x,this.y,this.armaActual.tiempoVidaProyectil);
                 disparo.vx =0;
                 disparo.vy = disparo.vy * -1;
             }
             if (this.orientacion == orientaciones.abajo) {
-                disparo= new DisparoJugador(this.armaActual.proyectilAbajo,this.x,this.y);
+                disparo= new DisparoJugador(this.armaActual.proyectilAbajo,this.x,this.y,this.armaActual.tiempoVidaProyectil);
                 disparo.vx=0;
 
             }
             if (this.orientacion == orientaciones.derecha) {
-                disparo= new DisparoJugador(this.armaActual.proyectilDerecha,this.x,this.y);
+                disparo= new DisparoJugador(this.armaActual.proyectilDerecha,this.x,this.y,this.armaActual.tiempoVidaProyectil);
                 disparo.vy=0;
             }
 
@@ -222,6 +226,7 @@ class Jugador extends Modelo {
 
     finAnimacionMorir(){
         this.estado = estados.muerto;
+        reproducirEfecto(this.jugador.efectoMorir);
     }
 
     golpeado (){

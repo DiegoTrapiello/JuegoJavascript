@@ -39,8 +39,14 @@ class GameLayer extends Layer {
 
         this.textoRecolectables = new Texto(0, 480 * 0.75, 320 * 0.07);
 
+        this.fondoVidas =
+            new Fondo(imagenes.icono_vidas, 480 * 0.55, 320 * 0.05);
+
+
 
         this.cargarMapa("res/" + nivelActual + ".txt");
+
+        this.textoVidas = new Texto(3, 480 * 0.6, 320 * 0.07);
     }
 
     actualizar() {
@@ -59,12 +65,19 @@ class GameLayer extends Layer {
 
         // Eliminar disparos sin velocidad
         for (var i = 0; i < this.disparosJugador.length; i++) {
-            if (this.disparosJugador[i] != null &&
-                this.disparosJugador[i].vx == 0 && this.disparosJugador[i].vy == 0) {
-
+            this.disparosJugador[i].tiempo--;
+            if (this.disparosJugador[i].tiempo <= 0) {
                 this.espacio
                     .eliminarCuerpoDinamico(this.disparosJugador[i]);
                 this.disparosJugador.splice(i, 1);
+            } else {
+                if (this.disparosJugador[i] != null &&
+                    this.disparosJugador[i].vx == 0 && this.disparosJugador[i].vy == 0) {
+
+                    this.espacio
+                        .eliminarCuerpoDinamico(this.disparosJugador[i]);
+                    this.disparosJugador.splice(i, 1);
+                }
             }
         }
 
@@ -105,6 +118,8 @@ class GameLayer extends Layer {
                 this.enemigos[i].posJugadorY = this.jugador.y;
             }
             this.enemigos[i].actualizar();
+
+
         }
 
         for (var i = 0; i < this.recolectables.length; i++) {
@@ -121,13 +136,19 @@ class GameLayer extends Layer {
         // colisiones
         for (var i = 0; i < this.enemigos.length; i++) {
             if (this.jugador.colisiona(this.enemigos[i])) {
-                this.jugador.golpeado();
-                if (this.jugador.vidas <= 0) {
-                    this.jugador.estado = estados.muriendo;
-                    this.enemigos[i].vx = 0;
-                    this.enemigos[i].vy = 0;
+                if (this.enemigos[i].estado != estados.muriendo  && this.enemigos[i].estado != estados.muerto) {
+                    this.jugador.golpeado();
+                    this.textoVidas.valor=this.jugador.vidas;
+                    if (this.jugador.vidas <= 0) {
+                        if (!this.jugador.efectoMorirReproducido){
+                            reproducirEfecto(this.jugador.efectoMorir);
+                            this.jugador.efectoMorirReproducido=true;
+                        }
+                        this.jugador.estado = estados.muriendo;
+                        this.enemigos[i].vx = 0;
+                        this.enemigos[i].vy = 0;
+                    }
                 }
-
 
             }
         }
@@ -145,6 +166,7 @@ class GameLayer extends Layer {
         for (var i = 0; i < this.recolectables.length; i++) {
             if (this.jugador.colisiona(this.recolectables[i])) {
                 this.textoRecolectables.valor++;
+                this.jugador.tiempoInvulnerable =100;
                 this.recolectables.splice(i, 1);
                 i = i - 1;
             }
@@ -198,7 +220,8 @@ class GameLayer extends Layer {
                     this.disparosJugador[i].colisiona(this.enemigos[j])) {
                     this.enemigos[j].vida = this.enemigos[j].vida - this.disparosJugador[i].dmg;
                     this.enemigos[j].impactado();
-                    if (this.enemigos[j].estado==estados.muriendo) {
+                    if (this.enemigos[j].estado == estados.muriendo) {
+                        reproducirEfecto(this.jugador.armaActual.sonido);
                         this.puntos.valor++;
                     }
                     this.espacio
@@ -298,6 +321,11 @@ class GameLayer extends Layer {
 
         this.fondoRecolectables.dibujar();
         this.textoRecolectables.dibujar();
+
+        this.fondoVidas.dibujar();
+        this.textoVidas.dibujar();
+
+        this.fondo
         if (!this.pausa && entrada == entradas.pulsaciones) {
             this.botonDisparo.dibujar();
             this.pad.dibujar();
@@ -392,7 +420,8 @@ class GameLayer extends Layer {
                 this.espacio.agregarCuerpoDinamico(enemigo);
                 break;
 
-            case "O": var enemigo = new EnemigoClon(x, y);
+            case "O":
+                var enemigo = new EnemigoClon(x, y);
                 enemigo.y = enemigo.y - enemigo.alto / 2;
                 // modificación para empezar a contar desde el suelo
                 this.enemigos.push(enemigo);

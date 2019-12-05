@@ -4,7 +4,9 @@ class Arma {
 
         this.tiempoDisparo = 0;
         this.cadenciaDisparo = 24;
+        this.tiempoVidaProyectil = 3;
         this.multiplicador = 1;
+        this.sonido = efectos.impacto_arma;
 
         this.moverArriba = new Animacion(imagenes.jugador_camina_sin_arma_arriba,
             ancho, alto, 3, 9, null);
