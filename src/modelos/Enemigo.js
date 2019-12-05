@@ -29,7 +29,8 @@ class Enemigo extends Modelo {
     finAnimacionMorir() {
         this.estado = estados.muerto;
     }
-    finAnimacionImpactado(){
+
+    finAnimacionImpactado() {
         this.estado = estados.moviendo;
     }
 
@@ -53,27 +54,31 @@ class Enemigo extends Modelo {
             this.vy = 0;
         } else {
 
+
             if (this.posJugadorX > this.x) {
                 this.vx = 1;
-
             }
-            if (this.posJugadorX < this.x) {
+            else if (this.posJugadorX < this.x) {
                 this.vx = -1;
-
             }
+
             if (this.posJugadorY > this.y) {
                 this.vy = 1;
-
             }
-            if (this.posJugadorY < this.y) {
+            else  if (this.posJugadorY < this.y) {
                 this.vy = -1;
-
             }
 
-            if (this.vx == 0) {
-                this.vxInteligencia = this.vxInteligencia * -1;
-                this.vx = this.vxInteligencia;
+
+            if (parseInt(this.posJugadorY) == parseInt(this.y)) {
+
+                this.vy = 0;
+
             }
+            if (parseInt(this.posJugadorX) == parseInt(this.x)) {
+                this.vx = 0;
+            }
+
 
         }
 

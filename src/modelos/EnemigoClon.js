@@ -28,75 +28,7 @@ class EnemigoClon extends Enemigo {
         this.vida = 200;
     }
 
-    finAnimacionMorir() {
-        this.estado = estados.muerto;
-    }
-    finAnimacionImpactado(){
-        this.estado = estados.moviendo;
-    }
 
-    actualizar() {
-        this.animacion.actualizar();
-
-        switch (this.estado) {
-            case estados.moviendo:
-                this.animacion = this.aMover;
-                break;
-            case estados.muriendo:
-                this.animacion = this.aMorir;
-                break;
-            case estados.impactado:
-                this.animacion = this.aImpactado;
-                break;
-        }
-
-        if (this.estado == estados.muriendo || this.estado == estados.impactado) {
-            this.vx = 0;
-            this.vy = 0;
-        } else {
-
-            if (this.posJugadorX > this.x) {
-                this.aMover = this.aMoverDerecha;
-                this.vx = 1;
-
-            }
-            if (this.posJugadorX < this.x) {
-                this.aMover = this.aMoverIzquierda;
-                this.vx = -1;
-
-            }
-            if (this.posJugadorY > this.y) {
-                this.vy = 1;
-
-            }
-            if (this.posJugadorY < this.y) {
-                this.vy = -1;
-
-            }
-
-            if (this.vx == 0) {
-                this.vxInteligencia = this.vxInteligencia * -1;
-                this.vx = this.vxInteligencia;
-            }
-
-        }
-
-    }
-
-    dibujar(scrollX) {
-        scrollX = scrollX || 0;
-        this.animacion.dibujar(this.x - scrollX, this.y);
-    }
-
-
-    impactado() {
-
-        if (this.vida <= 0) {
-            this.estado = estados.muriendo;
-        } else {
-            this.estado = estados.impactado;
-        }
-    }
 
 
 }
