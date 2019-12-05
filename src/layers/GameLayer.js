@@ -46,7 +46,7 @@ class GameLayer extends Layer {
 
         this.cargarMapa("res/" + nivelActual + ".txt");
 
-        this.textoVidas = new Texto(3, 480 * 0.6, 320 * 0.07);
+        this.textoVidas = new Texto(5, 480 * 0.6, 320 * 0.07);
     }
 
     actualizar() {

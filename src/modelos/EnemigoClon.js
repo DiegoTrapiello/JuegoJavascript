@@ -29,6 +29,59 @@ class EnemigoClon extends Enemigo {
     }
 
 
+    actualizar() {
+        this.animacion.actualizar();
+
+        switch (this.estado) {
+            case estados.moviendo:
+                this.animacion = this.aMover;
+                break;
+            case estados.muriendo:
+                this.animacion = this.aMorir;
+                break;
+            case estados.impactado:
+                this.animacion = this.aImpactado;
+                break;
+        }
+
+        if (this.estado == estados.muriendo || this.estado == estados.impactado) {
+            this.vx = 0;
+            this.vy = 0;
+        } else {
+
+
+            if (this.posJugadorX > this.x) {
+                this.vx = 1;
+                this.animacion= this.aMoverDerecha;
+            }
+            else if (this.posJugadorX < this.x) {
+                this.vx = -1;
+                this.animacion= this.aMoverIzquierda;
+            }
+
+            if (this.posJugadorY > this.y) {
+                this.vy = 1;
+            }
+            else  if (this.posJugadorY < this.y) {
+                this.vy = -1;
+            }
+
+
+            if (parseInt(this.posJugadorY) == parseInt(this.y)) {
+
+                this.vy = 0;
+
+            }
+            if (parseInt(this.posJugadorX) == parseInt(this.x)) {
+                this.vx = 0;
+            }
+
+
+        }
+
+    }
+
+
 
 
 }

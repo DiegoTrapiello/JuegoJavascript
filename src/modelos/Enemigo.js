@@ -23,7 +23,7 @@ class Enemigo extends Modelo {
         this.posJugadorX = this.x;
         this.posJugadorY = this.y;
 
-        this.vida = 50;
+        this.vida = 40;
     }
 
     finAnimacionMorir() {
